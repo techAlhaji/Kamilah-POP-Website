@@ -7,7 +7,7 @@ export const MusicToggle = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    audioRef.current = new Audio("https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=inspiring-cinematic-ambient-116199.mp3");
+    audioRef.current = new Audio("https://www.ngscholars.net/wp-content/uploads/2013/08/NYSC_ANTHEM.mp3");
     audioRef.current.loop = true;
     audioRef.current.volume = 0.3;
     return () => { audioRef.current?.pause(); };
