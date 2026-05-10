@@ -62,14 +62,19 @@ export const Tributes = () => {
       return;
     }
     setSubmitting(true);
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("tributes")
-      .insert({ name, relationship, message });
+      .insert({ name, relationship, message })
+      .select()
+      .single();
     setSubmitting(false);
-    if (error) {
+    if (error || !data) {
       toast.error("Couldn't send tribute. Try again?");
       return;
     }
+    setMessages((prev) =>
+      prev.some((m) => m.id === data.id) ? prev : [data as Tribute, ...prev]
+    );
     setForm({ name: "", relationship: "", message: "" });
     toast.success("Your tribute has been added 💚");
   };
