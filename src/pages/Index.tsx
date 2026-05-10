@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Hero } from "@/components/Hero";
 import { Countdown } from "@/components/Countdown";
 import { Timeline } from "@/components/Timeline";
@@ -12,20 +13,42 @@ import { MusicToggle } from "@/components/MusicToggle";
 import { FloatingHearts } from "@/components/FloatingHearts";
 
 const Index = () => {
+  const [unlocked, setUnlocked] = useState(false);
+
+  useEffect(() => {
+    if (unlocked) {
+      document.body.style.overflow = "";
+      return;
+    }
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, [unlocked]);
+
+  const handleUnlock = () => {
+    setUnlocked(true);
+    requestAnimationFrame(() => {
+      document.getElementById("journey")?.scrollIntoView({ behavior: "smooth" });
+    });
+  };
+
   return (
     <main className="min-h-screen bg-background">
       <Confetti />
       <FloatingHearts />
       <MusicToggle />
-      <Hero />
-      <Countdown />
-      <Timeline />
-      <KenBurnsCarousel />
-      <Gallery />
-      <VideoSection />
-      <Tributes />
-      <Surprise />
-      <Footer />
+      <Hero onUnlock={handleUnlock} />
+      {unlocked && (
+        <>
+          <Countdown />
+          <Timeline />
+          <KenBurnsCarousel />
+          <Gallery />
+          <VideoSection />
+          <Tributes />
+          <Surprise />
+          <Footer />
+        </>
+      )}
     </main>
   );
 };

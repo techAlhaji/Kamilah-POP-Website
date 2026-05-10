@@ -7,9 +7,9 @@ export const MusicToggle = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    audioRef.current = new Audio("/audio/nysc-anthem.mp3");
+    audioRef.current = new Audio("/audio/nysc-anthem-slow.mp3");
     audioRef.current.loop = true;
-    audioRef.current.volume = 0.3;
+    audioRef.current.volume = 0.25;
     return () => { audioRef.current?.pause(); };
   }, []);
 
