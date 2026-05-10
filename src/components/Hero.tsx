@@ -1,19 +1,24 @@
 import { motion } from "framer-motion";
 import { Sparkles, ChevronDown } from "lucide-react";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/kamilah-3.jpg";
 import { burstConfetti } from "./Confetti";
 
 export const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background */}
+      {/* Background — Kamilah on the parade ground */}
       <div className="absolute inset-0">
-        <img src={heroBg} alt="" width={1920} height={1280} className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/60 to-primary/90" />
+        <img
+          src={heroBg}
+          alt="Kamilah Salahudeen on the NYSC parade ground"
+          className="w-full h-full object-cover object-[center_30%] scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/50 to-primary/95" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/60 via-transparent to-primary/40" />
       </div>
 
       {/* Floating orbs */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
@@ -66,9 +71,18 @@ export const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.6 }}
-          className="text-lg md:text-2xl text-primary-foreground/90 font-light max-w-2xl mx-auto mb-10"
+          className="text-lg md:text-2xl text-primary-foreground/90 font-light max-w-2xl mx-auto mb-3"
         >
           From NYSC Camp to <span className="text-gold-light italic font-medium">Passing Out Strong</span>
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          className="text-sm md:text-base text-gold-light/80 italic mb-10"
+        >
+          A little corner of the internet, built by <span className="font-semibold">TechAlhaji</span>, just for you 💚
         </motion.p>
 
         <motion.div

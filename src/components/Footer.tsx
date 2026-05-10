@@ -24,11 +24,11 @@ export const Footer = () => {
             <span className="ml-2">💚</span>
           </p>
           <div className="mt-12 pt-8 border-t border-gold/20 max-w-md mx-auto">
-            <p className="text-primary-foreground/60 text-sm">
-              Made with love for <span className="text-gold-light font-medium">Kamilah Salahudeen</span>
+            <p className="text-primary-foreground/70 text-sm">
+              Built with too much love for <span className="text-gold-light font-semibold">Kamilah Salahudeen</span>
             </p>
-            <p className="text-primary-foreground/40 text-xs mt-2">
-              NYSC Passing Out Parade · {new Date().getFullYear()}
+            <p className="text-primary-foreground/50 text-xs mt-2">
+              by <span className="text-gold-light font-medium">TechAlhaji</span> · NYSC POP {new Date().getFullYear()}
             </p>
           </div>
         </motion.div>

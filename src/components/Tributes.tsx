@@ -4,6 +4,7 @@ import { Heart, Send, Quote } from "lucide-react";
 import { toast } from "sonner";
 
 const initialMessages = [
+  { name: "TechAlhaji", role: "Your Guy 💻", message: "Kamilah, see ehn — I built a whole website just to say congrats. That's the level. POP no be beans, you survived camp, PPA wahala, and that endless CDS. Ex-corper for life, boss lady loading. Proud of you, always. 💚" },
   { name: "Mama", role: "Mother", message: "My darling Kamilah, you have made me the proudest mother in the world. Watching you serve with grace and grow into this incredible woman has been a joy beyond words. 💚" },
   { name: "Tunde", role: "Best Friend", message: "From midnight gist in camp to today — we did it babe! POP no easy oh, but you came, you saw, you conquered. Now let's go and chop life! 🎊" },
   { name: "Aisha", role: "PPA Colleague", message: "Working with you was the highlight of my year. Your discipline and kindness lit up the office every single day. The next chapter is yours to own." },
