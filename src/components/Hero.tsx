@@ -3,7 +3,9 @@ import { Sparkles, ChevronDown } from "lucide-react";
 import heroBg from "@/assets/kamilah-3.jpg";
 import { burstConfetti } from "./Confetti";
 
-export const Hero = () => {
+interface HeroProps { onUnlock?: () => void }
+
+export const Hero = ({ onUnlock }: HeroProps) => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background — Kamilah on the parade ground */}
@@ -99,12 +101,12 @@ export const Hero = () => {
               Celebrate with us <Sparkles className="w-4 h-4" />
             </span>
           </button>
-          <a
-            href="#journey"
+          <button
+            onClick={onUnlock}
             className="px-8 py-4 rounded-full glass-dark text-primary-foreground font-medium hover:bg-white/10 transition-all"
           >
             See the journey
-          </a>
+          </button>
         </motion.div>
       </div>
 
