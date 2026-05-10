@@ -33,11 +33,35 @@ export const MusicToggle = () => {
         wasPlayingRef.current = false;
       }
     };
+    const handleVisibility = () => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      if (document.hidden && !audio.paused) {
+        audio.pause();
+        setPlaying(false);
+        wasPlayingRef.current = false;
+      }
+    };
+    const handleBlur = () => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      if (!audio.paused) {
+        audio.pause();
+        setPlaying(false);
+        wasPlayingRef.current = false;
+      }
+    };
     window.addEventListener("video:playing", handlePlay);
     window.addEventListener("video:stopped", handleStop);
+    document.addEventListener("visibilitychange", handleVisibility);
+    window.addEventListener("blur", handleBlur);
+    window.addEventListener("pagehide", handleBlur);
     return () => {
       window.removeEventListener("video:playing", handlePlay);
       window.removeEventListener("video:stopped", handleStop);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      window.removeEventListener("blur", handleBlur);
+      window.removeEventListener("pagehide", handleBlur);
     };
   }, []);
 
