@@ -1,20 +1,24 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { X } from "lucide-react";
-import g1 from "@/assets/gallery-1.jpg";
-import g2 from "@/assets/gallery-2.jpg";
-import g3 from "@/assets/gallery-3.jpg";
-import g4 from "@/assets/gallery-4.jpg";
-import g5 from "@/assets/gallery-5.jpg";
-import g6 from "@/assets/gallery-6.jpg";
+import g1 from "@/assets/kamilah-1.jpg";
+import g2 from "@/assets/kamilah-2.jpg";
+import g3 from "@/assets/kamilah-4.jpg";
+import g4 from "@/assets/kamilah-5.jpg";
+import g5 from "@/assets/kamilah-6.jpg";
+import g6 from "@/assets/kamilah-7.jpg";
+import g7 from "@/assets/kamilah-8.jpg";
+import g8 from "@/assets/kamilah-9.jpg";
 
 const photos = [
-  { src: g1, caption: "Standing tall in khaki", span: "md:row-span-2" },
-  { src: g2, caption: "Morning drills at sunrise", span: "" },
-  { src: g3, caption: "Friends for life", span: "" },
-  { src: g4, caption: "The proud parade", span: "md:row-span-2" },
-  { src: g5, caption: "Certified, sealed, delivered", span: "" },
-  { src: g6, caption: "Giving back to the community", span: "" },
+  { src: g1, caption: "Khaki suits you, Kamilah ✨", span: "md:row-span-2" },
+  { src: g2, caption: "The squad — chaos & love", span: "" },
+  { src: g3, caption: "That iconic NYSC cap", span: "" },
+  { src: g4, caption: "Sports competition winner 🏅", span: "md:row-span-2" },
+  { src: g5, caption: "Cool girl behind the shades", span: "" },
+  { src: g6, caption: "Sisters in service 🤍", span: "" },
+  { src: g7, caption: "Fam vibes on a Lagos road", span: "" },
+  { src: g8, caption: "Court side energy 🔥", span: "" },
 ];
 
 export const Gallery = () => {
@@ -36,14 +40,14 @@ export const Gallery = () => {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[200px] md:auto-rows-[260px] max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 auto-rows-[200px] md:auto-rows-[240px] max-w-6xl mx-auto">
           {photos.map((photo, i) => (
             <motion.button
               key={i}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
+              transition={{ duration: 0.5, delay: i * 0.06 }}
               onClick={() => setActive(i)}
               className={`group relative overflow-hidden rounded-2xl shadow-soft hover:shadow-elegant transition-all ${photo.span}`}
             >
@@ -53,7 +57,7 @@ export const Gallery = () => {
                 loading="lazy"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-5">
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-5">
                 <p className="text-primary-foreground font-display text-lg italic translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                   {photo.caption}
                 </p>
@@ -63,7 +67,6 @@ export const Gallery = () => {
         </div>
       </div>
 
-      {/* Lightbox */}
       <AnimatePresence>
         {active !== null && (
           <motion.div

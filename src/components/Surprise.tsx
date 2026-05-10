@@ -25,7 +25,7 @@ export const Surprise = () => {
             A Little <em className="text-gradient-gold not-italic">Surprise</em>
           </h2>
           <p className="text-muted-foreground max-w-md mx-auto mb-10">
-            Tap the gift below — there's something waiting just for you.
+            Tap the gift, Kamilah — there's a small letter from me waiting inside.
           </p>
 
           <motion.button
@@ -71,26 +71,30 @@ export const Surprise = () => {
                   <Heart className="w-7 h-7 text-gold-foreground fill-gold-foreground" />
                 </div>
                 <h3 className="font-display text-3xl md:text-4xl font-bold text-primary">A Letter for Kamilah</h3>
+                <p className="text-xs uppercase tracking-[0.3em] text-gold-deep mt-2">From TechAlhaji</p>
               </div>
 
               <div className="prose prose-lg max-w-none font-display text-foreground/90 leading-relaxed space-y-4 italic">
-                <p>My dear Kamilah,</p>
+                <p>Kamilah,</p>
                 <p>
-                  When you got that NYSC call-up letter, we knew the year ahead would change you — but we couldn't have imagined just how beautifully it would shape you.
-                </p>
-                <p>
-                  You showed up. To the early-morning parades. To the long bus rides. To the unfamiliar town that slowly became home. To the children whose lives you touched. To every single moment that asked something of you, you said <span className="text-gold-deep font-semibold not-italic">"yes."</span>
+                  First of all — <span className="not-italic font-semibold text-primary">YOU DID IT.</span> Service done. Khaki retired. Cap on the shelf. Look at God. 🙌🏽
                 </p>
                 <p>
-                  And now you stand here, certificate in hand, head held high, ready for whatever comes next. We are so unbelievably proud — not just of what you've accomplished, but of who you've become along the way.
+                  I'll be honest, I had to build a whole website to gist you because a regular "congrats babe" text just wasn't going to cut it this time. You served Nigeria for a full year — Nigeria! — so the least I could do was stay up writing CSS.
                 </p>
                 <p>
-                  This is more than the end of service. This is the beginning of everything.
+                  Watching you go through this year has been something else. Camp stories, parade complaints, that one PPA wahala you swore you'd never recover from, the random voice notes at odd hours, the medals, the pictures where your smile basically lights up the whole frame — I saw it all, and I'm so, so proud of you.
                 </p>
-                <p className="text-primary font-semibold not-italic pt-4">
-                  Go forward and shine, our girl. The world is waiting. 💚✨
+                <p>
+                  You're stubborn (in the best way), brilliant, kind, and somehow always have snacks. Whatever comes after this chapter — the job hunt, the master's plan, the soft life agenda, the world domination — I'm in your corner. Loud. Front row. Probably embarrassing you.
                 </p>
-                <p className="text-right text-muted-foreground not-italic text-sm">— With all our love</p>
+                <p className="text-primary font-semibold not-italic pt-2">
+                  Otondo days are over. Boss lady era loading. 💚✨
+                </p>
+                <p>P.S. If you cry, I'm not responsible. Refunds not available.</p>
+                <p className="text-right text-gold-deep not-italic font-semibold text-base pt-4">
+                  — Your guy, <span className="text-primary">TechAlhaji</span>
+                </p>
               </div>
             </motion.div>
           </motion.div>
