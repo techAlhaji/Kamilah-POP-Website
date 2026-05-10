@@ -81,17 +81,29 @@ export const Tributes = () => {
             <Heart className="w-5 h-5 text-gold-deep fill-gold" />
             <h3 className="font-display text-2xl font-bold text-primary">Leave your own tribute</h3>
           </div>
-          <input
-            type="text"
-            placeholder="Your name"
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="w-full px-5 py-3 rounded-xl bg-background/50 border border-border focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 mb-4 transition-all"
-          />
+          <div className="grid sm:grid-cols-2 gap-4 mb-4">
+            <input
+              type="text"
+              placeholder="Your name"
+              maxLength={60}
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              className="w-full px-5 py-3 rounded-xl bg-background/50 border border-border focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 transition-all"
+            />
+            <input
+              type="text"
+              placeholder="Your relationship (e.g. Mum, Best Friend, PPA Boss)"
+              maxLength={60}
+              value={form.relationship}
+              onChange={(e) => setForm({ ...form, relationship: e.target.value })}
+              className="w-full px-5 py-3 rounded-xl bg-background/50 border border-border focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 transition-all"
+            />
+          </div>
           <textarea
-            placeholder="Write something heartfelt..."
+            placeholder="Write something heartfelt for Kamilah..."
             value={form.message}
             onChange={(e) => setForm({ ...form, message: e.target.value })}
+            maxLength={600}
             rows={4}
             className="w-full px-5 py-3 rounded-xl bg-background/50 border border-border focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 mb-5 transition-all resize-none"
           />
