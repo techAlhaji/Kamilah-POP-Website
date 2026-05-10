@@ -20,6 +20,7 @@ export type Database = {
           id: string
           message: string
           name: string
+          owner_token: string | null
           relationship: string
         }
         Insert: {
@@ -27,6 +28,7 @@ export type Database = {
           id?: string
           message: string
           name: string
+          owner_token?: string | null
           relationship: string
         }
         Update: {
@@ -34,6 +36,7 @@ export type Database = {
           id?: string
           message?: string
           name?: string
+          owner_token?: string | null
           relationship?: string
         }
         Relationships: []
@@ -43,7 +46,33 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      delete_tribute: {
+        Args: { p_id: string; p_token: string }
+        Returns: boolean
+      }
+      update_tribute: {
+        Args: {
+          p_id: string
+          p_message: string
+          p_name: string
+          p_relationship: string
+          p_token: string
+        }
+        Returns: {
+          created_at: string
+          id: string
+          message: string
+          name: string
+          owner_token: string | null
+          relationship: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "tributes"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
     }
     Enums: {
       [_ in never]: never
