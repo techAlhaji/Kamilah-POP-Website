@@ -1,26 +1,75 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { Heart, Send, Quote } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Heart, Send, Quote, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
-const initialMessages = [
-  { name: "TechAlhaji", role: "Your Guy 💻", message: "Kamilah, see ehn — I built a whole website just to say congrats. That's the level. POP no be beans, you survived camp, PPA wahala, and that endless CDS. Ex-corper for life, boss lady loading. Proud of you, always. 💚" },
-];
+type Tribute = {
+  id: string;
+  name: string;
+  relationship: string;
+  message: string;
+  created_at: string;
+};
 
 export const Tributes = () => {
-  const [messages, setMessages] = useState(initialMessages);
+  const [messages, setMessages] = useState<Tribute[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({ name: "", relationship: "", message: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    let active = true;
+    supabase
+      .from("tributes")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .then(({ data, error }) => {
+        if (!active) return;
+        if (error) toast.error("Couldn't load tributes");
+        else setMessages(data ?? []);
+        setLoading(false);
+      });
+
+    const channel = supabase
+      .channel("tributes-stream")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "tributes" },
+        (payload) => {
+          setMessages((prev) => {
+            const next = payload.new as Tribute;
+            if (prev.some((m) => m.id === next.id)) return prev;
+            return [next, ...prev];
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      active = false;
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.relationship.trim() || !form.message.trim()) {
+    const name = form.name.trim();
+    const relationship = form.relationship.trim();
+    const message = form.message.trim();
+    if (!name || !relationship || !message) {
       toast.error("Please fill in your name, relationship, and message");
       return;
     }
-    setMessages([
-      { name: form.name.trim(), role: form.relationship.trim(), message: form.message.trim() },
-      ...messages,
-    ]);
+    setSubmitting(true);
+    const { error } = await supabase
+      .from("tributes")
+      .insert({ name, relationship, message });
+    setSubmitting(false);
+    if (error) {
+      toast.error("Couldn't send tribute. Try again?");
+      return;
+    }
     setForm({ name: "", relationship: "", message: "" });
     toast.success("Your tribute has been added 💚");
   };
@@ -39,34 +88,43 @@ export const Tributes = () => {
           <h2 className="font-display text-4xl md:text-6xl font-bold text-primary mb-4">
             Words from the <em className="text-gradient-gold not-italic">Heart</em>
           </h2>
+          <p className="text-muted-foreground max-w-xl mx-auto">
+            Every message left here is saved forever — visible to Kamilah and everyone she shares this with.
+          </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-16">
-          {messages.map((msg, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-              className="group glass rounded-2xl p-7 hover:shadow-elegant hover:-translate-y-2 transition-all duration-500 relative"
-            >
-              <Quote className="absolute top-5 right-5 w-8 h-8 text-gold/30" />
-              <p className="text-foreground/80 leading-relaxed mb-6 italic font-display text-lg">
-                "{msg.message}"
-              </p>
-              <div className="flex items-center gap-3 pt-4 border-t border-border/50">
-                <div className="w-10 h-10 rounded-full bg-gradient-gold flex items-center justify-center text-gold-foreground font-bold">
-                  {msg.name[0]}
+        {loading ? (
+          <div className="flex justify-center py-16">
+            <Loader2 className="w-8 h-8 text-primary animate-spin" />
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-16">
+            {messages.map((msg, i) => (
+              <motion.div
+                key={msg.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
+                className="group glass rounded-2xl p-7 hover:shadow-elegant hover:-translate-y-2 transition-all duration-500 relative"
+              >
+                <Quote className="absolute top-5 right-5 w-8 h-8 text-gold/30" />
+                <p className="text-foreground/80 leading-relaxed mb-6 italic font-display text-lg">
+                  "{msg.message}"
+                </p>
+                <div className="flex items-center gap-3 pt-4 border-t border-border/50">
+                  <div className="w-10 h-10 rounded-full bg-gradient-gold flex items-center justify-center text-gold-foreground font-bold">
+                    {msg.name[0]?.toUpperCase()}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-primary">{msg.name}</p>
+                    <p className="text-xs text-muted-foreground">{msg.relationship}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-semibold text-primary">{msg.name}</p>
-                  <p className="text-xs text-muted-foreground">{msg.role}</p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
 
         {/* Form */}
         <motion.form
@@ -109,9 +167,14 @@ export const Tributes = () => {
           />
           <button
             type="submit"
-            className="w-full sm:w-auto px-8 py-3 rounded-full bg-gradient-green text-primary-foreground font-semibold shadow-soft hover:shadow-elegant transition-all hover:scale-105 inline-flex items-center justify-center gap-2"
+            disabled={submitting}
+            className="w-full sm:w-auto px-8 py-3 rounded-full bg-gradient-green text-primary-foreground font-semibold shadow-soft hover:shadow-elegant transition-all hover:scale-105 inline-flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
-            Send Tribute <Send className="w-4 h-4" />
+            {submitting ? (
+              <>Sending… <Loader2 className="w-4 h-4 animate-spin" /></>
+            ) : (
+              <>Send Tribute <Send className="w-4 h-4" /></>
+            )}
           </button>
         </motion.form>
       </div>
