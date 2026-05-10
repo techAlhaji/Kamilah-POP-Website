@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { Tent, HeartHandshake, Briefcase, PartyPopper, Award } from "lucide-react";
+import { Tent, HeartHandshake, Briefcase, Wallet, Award } from "lucide-react";
 
 const stages = [
   { icon: Tent, title: "Orientation Camp", desc: "Three weeks of drills, parades, and unforgettable mornings. Where it all began.", color: "from-primary to-primary-glow" },
   { icon: HeartHandshake, title: "Community Development", desc: "Giving back through CDS — making a difference one project at a time.", color: "from-primary-glow to-gold" },
   { icon: Briefcase, title: "Place of Primary Assignment", desc: "Stepping into purpose. Growing in skill, character, and confidence.", color: "from-gold to-gold-deep" },
-  { icon: PartyPopper, title: "Fun Moments", desc: "Friendships forged, laughter shared, memories made for a lifetime.", color: "from-gold-light to-gold" },
+  { icon: Wallet, title: "Monthly Clearance", desc: "That sweet end-of-month ritual — signatures, smiles, and the famous alowee alert. 💸", color: "from-gold-light to-gold" },
   { icon: Award, title: "Passing Out Parade", desc: "The crown jewel. A year of service complete. A new chapter begins.", color: "from-gold to-primary" },
 ];
 
