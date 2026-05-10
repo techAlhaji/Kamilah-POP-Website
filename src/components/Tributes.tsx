@@ -5,23 +5,23 @@ import { toast } from "sonner";
 
 const initialMessages = [
   { name: "TechAlhaji", role: "Your Guy 💻", message: "Kamilah, see ehn — I built a whole website just to say congrats. That's the level. POP no be beans, you survived camp, PPA wahala, and that endless CDS. Ex-corper for life, boss lady loading. Proud of you, always. 💚" },
-  { name: "Mama", role: "Mother", message: "My darling Kamilah, you have made me the proudest mother in the world. Watching you serve with grace and grow into this incredible woman has been a joy beyond words. 💚" },
-  { name: "Tunde", role: "Best Friend", message: "From midnight gist in camp to today — we did it babe! POP no easy oh, but you came, you saw, you conquered. Now let's go and chop life! 🎊" },
-  { name: "Aisha", role: "PPA Colleague", message: "Working with you was the highlight of my year. Your discipline and kindness lit up the office every single day. The next chapter is yours to own." },
-  { name: "Daddy", role: "Father", message: "Kamilah, my princess. Service complete. The lessons you've gathered this year will carry you through life. Onwards and upwards. We love you." },
-  { name: "Bunmi", role: "Camp Roommate", message: "Otondo days are over!! Remember that night we burnt indomie at 2am? 😂 So glad we made it through together. Forever camp sisters. 🫶🏽" },
-  { name: "Engr. Adewale", role: "Boss at PPA", message: "Hardworking, brilliant, and dependable. Kamilah, the corporate world is lucky to have you. Wishing you nothing but greatness." },
 ];
 
 export const Tributes = () => {
   const [messages, setMessages] = useState(initialMessages);
-  const [form, setForm] = useState({ name: "", message: "" });
+  const [form, setForm] = useState({ name: "", relationship: "", message: "" });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.message) return;
-    setMessages([{ name: form.name, role: "Well-wisher", message: form.message }, ...messages]);
-    setForm({ name: "", message: "" });
+    if (!form.name.trim() || !form.relationship.trim() || !form.message.trim()) {
+      toast.error("Please fill in your name, relationship, and message");
+      return;
+    }
+    setMessages([
+      { name: form.name.trim(), role: form.relationship.trim(), message: form.message.trim() },
+      ...messages,
+    ]);
+    setForm({ name: "", relationship: "", message: "" });
     toast.success("Your tribute has been added 💚");
   };
 
