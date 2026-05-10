@@ -5,12 +5,40 @@ import { motion } from "framer-motion";
 export const MusicToggle = () => {
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const wasPlayingRef = useRef(false);
 
   useEffect(() => {
     audioRef.current = new Audio("/audio/nysc-anthem-slow.mp3");
     audioRef.current.loop = true;
     audioRef.current.volume = 0.25;
     return () => { audioRef.current?.pause(); };
+  }, []);
+
+  // Auto-pause music while a video is playing, resume when it stops
+  useEffect(() => {
+    const handlePlay = () => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      wasPlayingRef.current = !audio.paused;
+      if (!audio.paused) {
+        audio.pause();
+        setPlaying(false);
+      }
+    };
+    const handleStop = () => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      if (wasPlayingRef.current) {
+        audio.play().then(() => setPlaying(true)).catch(() => {});
+        wasPlayingRef.current = false;
+      }
+    };
+    window.addEventListener("video:playing", handlePlay);
+    window.addEventListener("video:stopped", handleStop);
+    return () => {
+      window.removeEventListener("video:playing", handlePlay);
+      window.removeEventListener("video:stopped", handleStop);
+    };
   }, []);
 
   const toggle = () => {

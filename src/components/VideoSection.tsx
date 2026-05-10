@@ -38,6 +38,9 @@ export const VideoSection = () => {
               controls
               playsInline
               preload="metadata"
+              onPlay={() => window.dispatchEvent(new CustomEvent("video:playing"))}
+              onPause={() => window.dispatchEvent(new CustomEvent("video:stopped"))}
+              onEnded={() => window.dispatchEvent(new CustomEvent("video:stopped"))}
             />
             <div className="absolute top-3 left-3 w-3 h-3 border-t-2 border-l-2 border-gold rounded-tl-lg pointer-events-none" />
             <div className="absolute top-3 right-3 w-3 h-3 border-t-2 border-r-2 border-gold rounded-tr-lg pointer-events-none" />
